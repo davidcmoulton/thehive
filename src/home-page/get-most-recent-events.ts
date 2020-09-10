@@ -22,10 +22,7 @@ export default (
         return true;
       }
 
-      const userFollows = await userId
-        .map(async (value) => follows(value, event.editorialCommunityId))
-        .unwrapOrElse(async () => false);
-
+      const userFollows = follows(userId, event.editorialCommunityId);
       return (isEditorialCommunityEndorsedArticleEvent(event) && userFollows)
         || (isEditorialCommunityReviewedArticleEvent(event) && userFollows);
     };
