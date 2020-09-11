@@ -9,36 +9,45 @@ export type GetEvents = (userId: UserId) => Promise<ReadonlyArray<FeedEvent>>;
 
 export { FeedEvent } from './render-feed-item';
 
-const loginInvitationMessage = `
+const loginInvitationMessage = async (): Promise<string> => Promise.resolve(`
   <p class="log-in-invitation">
     Log in to see your feed here or start building a new one by following some communities!
     <img src="/static/images/feed-screenshot.png" alt="Screenshot of a feed" width="100%">
   </p>
+`);
+
+const createFeed = (
+  getEvents: GetEvents,
+  renderFeedItem: RenderFeedItem,
+) => (
+  async (userId: UserId) => (
+    getEvents(userId)
+      .then(async (es) => Promise.all(es.map(renderFeedItem)))
+      .then(async (feedItems) => `
+        <ol class="ui large feed" role="list">
+          ${templateListItems(feedItems, 'event')}
+        </ol>
+      `)
+  )
+);
+
+const formatAsSection = (contents: string): string => `
+  <section>
+    <h2 class="ui header">
+      Feed
+    </h2>
+    ${contents}
+  </section>
 `;
 
 export default (
   getEvents: GetEvents,
   renderFeedItem: RenderFeedItem,
-): RenderFeed => (
-  async (userId) => (
-    userId.mapOr(
-      Promise.resolve(loginInvitationMessage),
-      async (u) => (
-        getEvents(u)
-          .then(async (es) => Promise.all(es.map(renderFeedItem)))
-          .then(async (feedItems) => `
-            <ol class="ui large feed" role="list">
-              ${templateListItems(feedItems, 'event')}
-            </ol>
-          `)
-      ),
-    ).then((contents) => `
-      <section>
-        <h2 class="ui header">
-          Feed
-        </h2>
-        ${contents}
-      </section>
-    `)
-  )
-);
+): RenderFeed => {
+  const feed = createFeed(getEvents, renderFeedItem);
+  return async (userId) => (
+    userId
+      .mapOrElse(loginInvitationMessage, feed)
+      .then(formatAsSection)
+  );
+};
