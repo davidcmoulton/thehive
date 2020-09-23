@@ -45,7 +45,28 @@ export default (page: string, user: Maybe<User>): string => `<!doctype html>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css">
 
   <header class="u-full-width">
+    <script>
+      (function(window) {
+        window.addEventListener('DOMContentLoaded', function () {
+        
+          const query = window.location.search;
 
+          const logoNumber = parseInt(query.substring(query.indexOf('logo=') + 5, query.indexOf('logo=') + 6) || '1');
+          if (logoNumber > 0 && logoNumber < 5) {
+            const colourNumber = query.substring(query.indexOf('colour=') + 7, query.indexOf('colour=') + 8) || '1'
+            document.querySelector('html').classList.add('logo-' + logoNumber, 'colour-' + colourNumber);
+            document.getElementById('siteLogo').src = '/static/images/hive-ideas_colour_way_' + logoNumber + '.svg';
+          } else if (logoNumber === 5) {
+            document.getElementById('siteLogo').src = '/static/images/hive-ideas_idea-2.svg';
+          } else if (logoNumber === 6) {
+            document.getElementById('siteLogo').src = '/static/images/hive-ideas_idea-3.svg';
+          }
+        
+        });
+        
+      }(window));
+    </script>
+    <img alt="" class="site-logo" id="siteLogo">
     <nav>
 
       <ul class="ui large text menu">

@@ -165,6 +165,22 @@ Styles that are independent of Semantic UI
   --SIX-INCREMENTS: calc(var(--VERTICAL-INCREMENT) * 6);
   --MAX-SITE-WIDTH: 1200;
   --MAX-SITE-WIDTH-REM: calc((var(--MAX-SITE-WIDTH) / var(--BASE-FONT-MEASURE)) * 1rem);
+
+  --LOGO-1-COLOUR-1: #662482;
+  --LOGO-1-COLOUR-2: #941B80;
+
+  --LOGO-2-COLOUR-1: #03A9F4;
+  --LOGO-2-COLOUR-2: #4A148C;
+  --LOGO-2-COLOUR-3: #F48FB1;
+
+  --LOGO-3-COLOUR-1: #03A9F4;
+  --LOGO-3-COLOUR-2: #E91E63;
+  --LOGO-3-COLOUR-3: #009688;
+
+  --LOGO-4-COLOUR-1: #FFC107;
+  --LOGO-4-COLOUR-2: #FF6F00;
+  --LOGO-4-COLOUR-3: #3E2723;
+
 }
 
 html {
@@ -418,4 +434,66 @@ article-page, flavor B
 
 .evaluation-section__review_list p:last-child {
   margin-bottom: 0;
+}
+
+.site-logo {
+  width: 200px;
+  height: calc(170px / 3);
+  margin-left: -22px;
+}
+
+html.logo-1 {
+  --colour-1: var(--LOGO-1-COLOUR-1);
+  --colour-2: var(--LOGO-1-COLOUR-2);
+}
+
+html.logo-2 {
+  --colour-1: var(--LOGO-2-COLOUR-1);
+  --colour-2: var(--LOGO-2-COLOUR-2);
+  --colour-3: var(--LOGO-2-COLOUR-3);
+}
+
+html.logo-3 {
+  --colour-1: var(--LOGO-3-COLOUR-1);
+  --colour-2: var(--LOGO-3-COLOUR-2);
+  --colour-3: var(--LOGO-3-COLOUR-3);
+}
+
+html.logo-4 {
+  --colour-1: var(--LOGO-4-COLOUR-1);
+  --colour-2: var(--LOGO-4-COLOUR-2);
+  --colour-3: var(--LOGO-4-COLOUR-3);
+}
+
+html.colour-1 a {
+  color: var(--colour-1) !important;
+}
+
+html.colour-2 a {
+  color: var(--colour-2) !important;
+}
+
+html.colour-3 a {
+  color: var(--colour-3) !important;
+}
+
+html.colour-1 button,
+html.colour-1 .ui.button,
+html.colour-1 .ui .button {
+  background-color: var(--colour-1) !important;
+  color: #fff !important;
+}
+
+html.colour-2 button,
+html.colour-2 .ui.button,
+html.colour-2 .ui .button {
+  background-color: var(--colour-2) !important;
+  color: #fff !important;
+}
+
+html.colour-3 button,
+html.colour-3 .ui.button,
+html.colour-3 .ui .button {
+  background-color: var(--colour-3) !important;
+  color: #fff !important;
 }
