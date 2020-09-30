@@ -114,7 +114,8 @@ export default (page: string, user: Maybe<User>): string => `<!doctype html>
       }(window));
     </script>
     <div id="logo-wrapper"></div>
-    <nav>
+
+    <nav class="site-header">
 
       <ul class="ui large text menu">
 

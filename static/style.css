@@ -159,6 +159,7 @@ Styles that are independent of Semantic UI
   --BASE-FONT-PX: calc(var(--BASE-FONT-MEASURE) * 1px);
   --BASE-FONT-REM: 1rem;
   --VERTICAL-INCREMENT: calc(var(--BASE-FONT-REM) / 2);
+  --ONE-INCREMENT: calc(var(--VERTICAL-INCREMENT));
   --TWO-INCREMENTS: calc(var(--VERTICAL-INCREMENT) * 2);
   --THREE-INCREMENTS: calc(var(--VERTICAL-INCREMENT) * 3);
   --FOUR-INCREMENTS: calc(var(--VERTICAL-INCREMENT) * 4);
@@ -282,7 +283,8 @@ h6 {
   .hive-grid {
     display: grid;
       grid-template-columns: repeat(12, 1fr);
-      grid-gap: 20px;
+      grid-column-gap: 20px;
+      grid-auto-flow: column;
   }
 }
 
@@ -296,6 +298,15 @@ h6 {
   margin: 0 auto;
 }
 
+.site-header {
+  margin-bottom: var(--SIX-INCREMENTS);
+}
+
+.hive-grid--article > .article-header {
+  margin-bottom: var(--SIX-INCREMENTS);
+}
+
+.hive-grid--article > .article-header,
 .hive-grid--article > .main-content {
   grid-column: 1 / -1;
 }
@@ -306,6 +317,7 @@ h6 {
   }
 }
 
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 article-page, flavor A, feed-item
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -314,8 +326,14 @@ article-page, flavor A, feed-item
 }
 
 .article-feed__item {
-  display: flex;
+  display: block;
   margin-bottom: var(--FOUR-INCREMENTS);
+}
+
+@media screen and (min-width: 46.25em) {
+  .article-feed__item {
+    display: flex;
+  }
 }
 
 .article-feed__item__avatar {
@@ -339,6 +357,8 @@ article-page, flavor A, feed-item
 p.article-feed__item__title {
   font-family: Lato, sans-serif;
   font-size: 1.5rem;
+  margin-bottom: var(--TWO-INCREMENTS);
+  padding-right: calc(100 / var(--BASE-FONT-MEASURE) * 1rem)
 }
 
 .article-feed__item__read_more {
@@ -360,6 +380,7 @@ p.article-feed__item__title {
 
 .article-author-list > li {
   float:left;
+  line-height: 1.5;
 }
 
 .article-author-list > li:after {
@@ -376,68 +397,61 @@ p.article-feed__item__title {
   padding-left: 0;
 }
 
+.article-meta-data-list > li {
+  line-height: 1.5;
+}
+
 .article-call-to-action-link {
   font-family: Lato, sans-serif;
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-article-page, flavor B
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-.evaluation-section__community_link {
+.hidden {
+  display: none;
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  user-select: none;
+}
+
+.article-feed__item_body {
+  position: relative;
+}
+
+.article-feed__item-toggle {
+  position: absolute;
+  top: calc(24 / var(--BASE-FONT-MEASURE) * 1rem);
+  right: 0;
+  color: rgb(61, 131, 196);
+  outline-width: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.user-page-header {
   display: flex;
   align-items: center;
 }
 
-.evaluation-section__avatar {
-  width: 47px;
-  height: 47px;
-  border: 1px solid #eee;
+.user-page-header__avatar {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  margin-right: 1rem;
   border-radius: 50%;
-  flex: 0 0 47px;
-  margin-right: 0.75rem;
 }
 
-.evaluation-section__summary_list {
-  list-style: none;
-  padding-left: 0;
-}
-
-.evaluation-section__summary_date {
-  font-family: Lato, sans-serif;
-  display: block;
-  margin-bottom: var(--THREE-INCREMENTS);
-}
-
-.evaluation-section__reviews {
-  padding-left: calc((40 / var(--BASE-FONT-MEASURE)) * 1rem);
-}
-
-.evaluation-section__review_list {
-  padding-left: 0;
-  list-style: none;
-}
-
-.evaluation-section__review_list__header {
-  font-weight: bold;
-  margin-bottom: var(--TWO-INCREMENTS);
-}
-
-.evaluation-section__review_list__date {
-  font-family: Lato, sans-serif;
-}
-
-.version-timeline-list {
-  padding-left: 0;
-  list-style: none;
-  font-family: Lato, sans-serif;
-}
-
-.evaluation-section__review_list li {
-  margin-bottom: var(--FOUR-INCREMENTS);
-}
-
-.evaluation-section__review_list p:last-child {
-  margin-bottom: 0;
+.user-page-header__handle {
+  font-size: calc((26 / var(--BASE-FONT-MEASURE)) * 1rem);
+  color: #666;
 }
 
 .site-logo {

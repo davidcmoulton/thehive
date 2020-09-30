@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Pool } from 'pg';
 import { Adapters } from './adapters';
+import createArticleCache from './article-cache';
 import createCommitEvents from './commit-events';
 import createEventSourceFollowListRepository from './event-sourced-follow-list-repository';
 import createFetchCrossrefArticle from './fetch-crossref-article';
@@ -10,8 +11,6 @@ import createFetchHypothesisAnnotation from './fetch-hypothesis-annotation';
 import createFetchReview from './fetch-review';
 import createFetchStaticFile from './fetch-static-file';
 import createFollows from './follows';
-import createGetBiorxivCommentCount from './get-biorxiv-comment-count';
-import createGetDisqusPostCount from './get-disqus-post-count';
 import getEventsFromDataFiles from './get-events-from-data-files';
 import getEventsFromDatabase from './get-events-from-database';
 import createGetTwitterResponse from './get-twitter-response';
@@ -81,8 +80,7 @@ const createInfrastructure = async (): Promise<Adapters> => {
   const getTwitterResponse = createGetTwitterResponse(process.env.TWITTER_API_BEARER_TOKEN ?? '');
 
   return {
-    fetchArticle: createFetchCrossrefArticle(getXml, logger),
-    getBiorxivCommentCount: createGetBiorxivCommentCount(createGetDisqusPostCount(getJson, logger), logger),
+    fetchArticle: createArticleCache(createFetchCrossrefArticle(getXml, logger), logger),
     fetchReview: createFetchReview(fetchDataciteReview, fetchHypothesisAnnotation),
     fetchStaticFile: createFetchStaticFile(logger),
     searchEuropePmc,
