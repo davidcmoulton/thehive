@@ -49,6 +49,26 @@ export default (page: string, user: Maybe<User>): string => `<!doctype html>
       (function(window) {
         
         window.addEventListener('DOMContentLoaded', function () {
+          
+          const links = document.querySelectorAll('a[href]');
+          Array.prototype.forEach.call(links, function (link) {
+            link.addEventListener('click', function(e) {
+              const option = !isNaN(parseInt(query.substring(query.indexOf('option=') + 7, query.indexOf('option=') + 8))) ? 'option=' + parseInt(query.substring(query.indexOf('option=') + 7, query.indexOf('option=') + 8)) :
+              '';
+              const logo = !isNaN(parseInt(query.substring(query.indexOf('logo=') + 5, query.indexOf('logo=') + 6))) ? 'logo=' + parseInt(query.substring(query.indexOf('logo=') + 5, query.indexOf('logo=') + 6)) :
+              '';
+              const colour = !isNaN(parseInt(query.substring(query.indexOf('colour=') + 7, query.indexOf('colour=') + 8))) ? 'colour=' + parseInt(query.substring(query.indexOf('colour=') + 7, query.indexOf('colour=') + 8)) :
+              '';
+              const iteration = !isNaN(parseInt(query.substring(query.indexOf('iteration=') + 10, query.indexOf('iteration=') + 11))) ? 'iteration=' + parseInt(query.substring(query.indexOf('iteration=') + 10, query.indexOf('iteration=') + 11)) :
+              '';
+              let newHref = e.target.getAttribute('href') + '?' + iteration + '&' + option + '&' + logo + '&' + colour;
+              while (newHref.indexOf('&&') > -1) {
+                newHref = newHref.replace('&&', '&');
+              }
+              e.target.href = newHref;
+            });
+          });
+          
           const query = window.location.search;
           const designIteration = parseInt(query.substring(query.indexOf('iteration=') + 10, query.indexOf('iteration=') + 11) || 1);
           const htmlElement = document.querySelector('html');
