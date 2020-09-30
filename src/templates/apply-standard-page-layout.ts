@@ -47,42 +47,53 @@ export default (page: string, user: Maybe<User>): string => `<!doctype html>
   <header class="u-full-width">
     <script>
       (function(window) {
+        
         window.addEventListener('DOMContentLoaded', function () {
-        
           const query = window.location.search;
-          const optionNumber = parseInt(query.substring(query.indexOf('option=') + 7, query.indexOf('option=') + 8) || -1);
-          let logoNumber = parseInt(query.substring(query.indexOf('logo=') + 5, query.indexOf('logo=') + 6) || '1');
-          let colourNumber = '';
-          if (optionNumber === 1) {
-            logoNumber = 1;
-            colourNumber = 1;
-          } else if (optionNumber === 2) {
-            logoNumber = 2;
-            colourNumber = 2;
-          } else if (optionNumber === 3) {
-            logoNumber = 3;
-            colourNumber = 3
-          } else if (optionNumber === 4) {
-            logoNumber = 4;
-            colourNumber = 2;
-          }
-          if (logoNumber > 0 && logoNumber < 5) {
-            if (!colourNumber) {
-              colourNumber = query.substring(query.indexOf('colour=') + 7, query.indexOf('colour=') + 8) || '1'
+          const designIteration = parseInt(query.substring(query.indexOf('iteration=') + 10, query.indexOf('iteration=') + 11) || 1);
+          const htmlElement = document.querySelector('html');
+          
+          if (designIteration === 1) {
+            
+            const optionNumber = parseInt(query.substring(query.indexOf('option=') + 7, query.indexOf('option=') + 8) || -1);
+            let logoNumber = parseInt(query.substring(query.indexOf('logo=') + 5, query.indexOf('logo=') + 6) || '1');
+            let colourNumber = '';
+            if (optionNumber === 1) {
+              logoNumber = 1;
+              colourNumber = 1;
+            } else if (optionNumber === 2) {
+              logoNumber = 2;
+              colourNumber = 2;
+            } else if (optionNumber === 3) {
+              logoNumber = 3;
+              colourNumber = 3
+            } else if (optionNumber === 4) {
+              logoNumber = 4;
+              colourNumber = 2;
             }
-            document.querySelector('html').classList.add('logo-' + logoNumber, 'colour-' + colourNumber);
-            document.getElementById('siteLogo').src = '/static/images/hive-ideas_colour_way_' + logoNumber + '.svg';
-          } else if (logoNumber === 5) {
-            document.getElementById('siteLogo').src = '/static/images/hive-ideas_idea-2.svg';
-          } else if (logoNumber === 6) {
-            document.getElementById('siteLogo').src = '/static/images/hive-ideas_idea-3.svg';
-          }
+            if (logoNumber > 0 && logoNumber < 5) {
+              if (!colourNumber) {
+                colourNumber = query.substring(query.indexOf('colour=') + 7, query.indexOf('colour=') + 8) || '1'
+              }
+              document.getElementById('logo-wrapper').innerHTML = '<img alt="" class="site-logo" id="siteLogo">';
+              htmlElement.classList.add('logo-' + logoNumber, 'colour-' + colourNumber);
+              document.getElementById('siteLogo').src = '/static/images/hive-ideas_colour_way_' + logoNumber + '.svg';
+            } else if (logoNumber === 5) {
+              document.getElementById('siteLogo').src = '/static/images/hive-ideas_idea-2.svg';
+            } else if (logoNumber === 6) {
+              document.getElementById('siteLogo').src = '/static/images/hive-ideas_idea-3.svg';
+            }
         
+          } else if (designIteration === 2) {
+            const colourNumber = parseInt(query.substring(query.indexOf('colour=') + 7, query.indexOf('colour=') + 8)) || '1'
+            htmlElement.classList.add('iteration-2', 'colour-' + colourNumber);
+          }
+          
         });
         
       }(window));
     </script>
-    <img alt="" class="site-logo" id="siteLogo">
+    <div id="logo-wrapper"></div>
     <nav>
 
       <ul class="ui large text menu">

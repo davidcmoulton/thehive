@@ -181,6 +181,10 @@ Styles that are independent of Semantic UI
   --LOGO-4-COLOUR-2: #FF6F00;
   --LOGO-4-COLOUR-3: #3E2723;
 
+  --ITERATION-2-COLOUR-1: #E64A19;
+  --ITERATION-2-COLOUR-2: #00897B;
+  --ITERATION-2-COLOUR-3: #7CB342;
+  --ITERATION-2-COLOUR-4: #0288D1;
 }
 
 html {
@@ -465,6 +469,13 @@ html.logo-4 {
   --colour-3: var(--LOGO-4-COLOUR-3);
 }
 
+html.iteration-2 {
+  --colour-1: var(--ITERATION-2-COLOUR-1);
+  --colour-2: var(--ITERATION-2-COLOUR-2);
+  --colour-3: var(--ITERATION-2-COLOUR-3);
+  --colour-4: var(--ITERATION-2-COLOUR-4);
+}
+
 html.colour-1 a {
   color: var(--colour-1) !important;
 }
@@ -497,3 +508,32 @@ html.colour-3 .ui .button {
   background-color: var(--colour-3) !important;
   color: #fff !important;
 }
+
+html.iteration-2.colour-1 button,
+html.iteration-2.colour-1 .ui.button,
+html.iteration-2.colour-1 .ui .button {
+  background-color: var(--colour-1) !important;
+  color: #fff !important;
+}
+
+html.iteration-2.colour-2 button,
+html.iteration-2.colour-2 .ui.button,
+html.iteration-2.colour-2 .ui .button {
+  background-color: var(--colour-2) !important;
+  color: #fff !important;
+}
+
+html.iteration-2.colour-3 button,
+html.iteration-2.colour-3 .ui.button,
+html.iteration-2.colour-3 .ui .button {
+  background-color: var(--colour-3) !important;
+  color: #fff !important;
+}
+
+html.iteration-2.colour-4 button,
+html.iteration-2.colour-4 .ui.button,
+html.iteration-2.colour-4 .ui .button {
+  background-color: var(--colour-4) !important;
+  color: #fff !important;
+}
+
