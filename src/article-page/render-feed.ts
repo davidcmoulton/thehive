@@ -25,40 +25,6 @@ export default (
       <ol role="list" class="article-feed">
         ${items}
       </ol>
-      <script>
-        (function(doc) {
-          function buildToggle() {
-            const button = doc.createElement('button');
-            button.classList.add('article-feed__item-toggle');
-            return button;
-          }
-          const itemBodies = doc.querySelectorAll('.article-feed__item_body');
-          Array.prototype.forEach.call(itemBodies, function (itemBody) {
-            const teaser = itemBody.querySelector('[data-teaser]');
-            const fullText = itemBody.querySelector('[data-full-text]');
-
-            const toggle = buildToggle();
-            itemBody.insertBefore(toggle, fullText);
-
-            teaser.classList.remove('hidden');
-            fullText.classList.add('hidden');
-            toggle.innerHTML = 'See more <span aria-hidden="true">+</span>';
-
-            toggle.addEventListener('click', function (e) {
-              const target = e.target;
-              if (target.innerHTML.indexOf('See more') > -1) {
-                teaser.classList.add('hidden');
-                fullText.classList.remove('hidden');
-                target.innerHTML = 'See less <span aria-hidden="true">-</span>';
-              } else {
-                teaser.classList.remove('hidden');
-                fullText.classList.add('hidden');
-                target.innerHTML = 'See more <span aria-hidden="true">+</span>';
-              }
-            })
-          });
-        }(window.document));
-      </script>
     </section>
   `);
 };

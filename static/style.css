@@ -416,6 +416,10 @@ p.article-feed__item__title {
   font-family: var(--font-family-sans);
 }
 
+.u-call-to-action-link {
+  font-family: Lato, sans-serif;
+}
+
 .hidden {
   display: none;
 }
