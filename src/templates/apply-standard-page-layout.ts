@@ -128,7 +128,7 @@ export default (page: string, user: Maybe<User>): string => `<!doctype html>
                 break;
               case 4:
                 logoPath = '/static/images/hive-ideas-refinements_C1390F-option.svg'
-                colourNumber = 1;
+                colourNumber = 3;
                 break;
               default:
                 colourNumber = 0;
