@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:ital,wght@0,400;0,700;1,400&subset=latin,latin-ext&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Source+Sans+Pro:wght@400;700&display=swap');
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Styles that override Semantic UI
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -155,6 +156,7 @@ Styles that are independent of Semantic UI
 }
 
 :root {
+  --SANS-FONT-1: Lato, sans-serif;
   --BASE-FONT-MEASURE: 16;
   --BASE-FONT-PX: calc(var(--BASE-FONT-MEASURE) * 1px);
   --BASE-FONT-REM: 1rem;
@@ -182,13 +184,22 @@ Styles that are independent of Semantic UI
   --LOGO-4-COLOUR-2: #FF6F00;
   --LOGO-4-COLOUR-3: #3E2723;
 
-  --ITERATION-2-COLOUR-1: #E64A19;
-  --ITERATION-2-COLOUR-2: #00897B;
-  --ITERATION-2-COLOUR-3: #7CB342;
-  --ITERATION-2-COLOUR-4: #0288D1;
+  /*--ITERATION-2-COLOUR-1: #E64A19;*/
+  /*--ITERATION-2-COLOUR-2: #00897B;*/
+  /*--ITERATION-2-COLOUR-3: #7CB342;*/
+  /*--ITERATION-2-COLOUR-4: #0288D1;*/
+
+  --ITERATION-2-COLOUR-1: #00796b;
+  --ITERATION-2-COLOUR-2: #283593;
+  --ITERATION-2-COLOUR-3: #C1390F;
+
+  --ITERATION-2-SANS-FONT-2: 'Source Sans Pro', sans-serif;
+  --ITERATION-2-SANS-FONT-3: 'Open Sans', sans-serif;
 }
 
 html {
+  --font-family-sans: var(--SANS-FONT-1)    ;
+
   font-size: var(--BASE-FONT-PX);
 }
 
@@ -215,7 +226,7 @@ section {
 }
 
 h1 {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
   font-size: calc((38 / 16) * 1rem);
   margin-top: 0;
   margin-bottom: var(--TWO-INCREMENTS);
@@ -224,7 +235,7 @@ h1 {
 }
 
 h2 {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
   font-size: calc((30 / 16) * 1rem);
   margin-top: 0;
   margin-bottom: var(--TWO-INCREMENTS);
@@ -233,7 +244,7 @@ h2 {
 }
 
 h3 {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
   font-size: calc((26 / 16) * 1rem);
   margin-top: 0;
   margin-bottom: var(--TWO-INCREMENTS);
@@ -242,7 +253,7 @@ h3 {
 }
 
 h4 {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
   font-size: calc((22 / 16) * 1rem);
   margin-top: 0;
   margin-bottom: var(--TWO-INCREMENTS);
@@ -251,7 +262,7 @@ h4 {
 }
 
 h5 {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
   font-size: calc((18 / 16) * 1rem);
   margin-top: 0;
   margin-bottom: var(--TWO-INCREMENTS);
@@ -260,7 +271,7 @@ h5 {
 }
 
 h6 {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
   font-size: var(--BASE-FONT-REM);
   margin-top: 0;
   margin-bottom: var(--TWO-INCREMENTS);
@@ -346,7 +357,7 @@ article-page, flavor A, feed-item
 }
 
 .article-feed__item__date {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
 }
 
 .article-feed p:last-child {
@@ -355,7 +366,7 @@ article-page, flavor A, feed-item
 
 .article-feed__item__title,
 p.article-feed__item__title {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
   font-size: 1.5rem;
   margin-bottom: var(--TWO-INCREMENTS);
   padding-right: calc(100 / var(--BASE-FONT-MEASURE) * 1rem)
@@ -372,7 +383,7 @@ p.article-feed__item__title {
 }
 
 .article-author-list {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
   padding-left: 0;
   display: flow-root;
   list-style: none;
@@ -392,7 +403,7 @@ p.article-feed__item__title {
 }
 
 .article-meta-data-list {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
   list-style: none;
   padding-left: 0;
 }
@@ -402,7 +413,7 @@ p.article-feed__item__title {
 }
 
 .article-call-to-action-link {
-  font-family: Lato, sans-serif;
+  font-family: var(--font-family-sans);
 }
 
 .hidden {
@@ -487,7 +498,6 @@ html.iteration-2 {
   --colour-1: var(--ITERATION-2-COLOUR-1);
   --colour-2: var(--ITERATION-2-COLOUR-2);
   --colour-3: var(--ITERATION-2-COLOUR-3);
-  --colour-4: var(--ITERATION-2-COLOUR-4);
 }
 
 html.colour-1 a {
@@ -544,10 +554,10 @@ html.iteration-2.colour-3 .ui .button {
   color: #fff !important;
 }
 
-html.iteration-2.colour-4 button,
-html.iteration-2.colour-4 .ui.button,
-html.iteration-2.colour-4 .ui .button {
-  background-color: var(--colour-4) !important;
-  color: #fff !important;
+html.font-2 {
+  --font-family-sans: var(--ITERATION-2-SANS-FONT-2);
 }
 
+html.font-3 {
+  --font-family-sans: var(--ITERATION-2-SANS-FONT-3);
+}

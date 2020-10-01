@@ -47,6 +47,10 @@ export default (page: string, user: Maybe<User>): string => `<!doctype html>
   <header class="u-full-width">
     <script>
       (function(window) {
+
+        function injectLogo(path) {
+          document.getElementById('logo-wrapper').innerHTML = '<img alt="" class="site-logo" id="siteLogo" src="' + path + '">';
+        }
         
         window.addEventListener('DOMContentLoaded', function () {
           
@@ -57,11 +61,13 @@ export default (page: string, user: Maybe<User>): string => `<!doctype html>
               '';
               const logo = !isNaN(parseInt(query.substring(query.indexOf('logo=') + 5, query.indexOf('logo=') + 6))) ? 'logo=' + parseInt(query.substring(query.indexOf('logo=') + 5, query.indexOf('logo=') + 6)) :
               '';
+              const font = !isNaN(parseInt(query.substring(query.indexOf('font=') + 5, query.indexOf('font=') + 6))) ? 'font=' + parseInt(query.substring(query.indexOf('font=') + 5, query.indexOf('font=') + 6)) :
+              '';
               const colour = !isNaN(parseInt(query.substring(query.indexOf('colour=') + 7, query.indexOf('colour=') + 8))) ? 'colour=' + parseInt(query.substring(query.indexOf('colour=') + 7, query.indexOf('colour=') + 8)) :
               '';
               const iteration = !isNaN(parseInt(query.substring(query.indexOf('iteration=') + 10, query.indexOf('iteration=') + 11))) ? 'iteration=' + parseInt(query.substring(query.indexOf('iteration=') + 10, query.indexOf('iteration=') + 11)) :
               '';
-              let newHref = e.target.getAttribute('href') + '?' + iteration + '&' + option + '&' + logo + '&' + colour;
+              let newHref = e.target.getAttribute('href') + '?' + iteration + '&' + option + '&' + logo + '&' + colour + '&' + font;
               while (newHref.indexOf('&&') > -1) {
                 newHref = newHref.replace('&&', '&');
               }
@@ -72,12 +78,12 @@ export default (page: string, user: Maybe<User>): string => `<!doctype html>
           const query = window.location.search;
           const designIteration = parseInt(query.substring(query.indexOf('iteration=') + 10, query.indexOf('iteration=') + 11) || 1);
           const htmlElement = document.querySelector('html');
+          let colourNumber = '';
           
           if (designIteration === 1) {
             
             const optionNumber = parseInt(query.substring(query.indexOf('option=') + 7, query.indexOf('option=') + 8) || -1);
             let logoNumber = parseInt(query.substring(query.indexOf('logo=') + 5, query.indexOf('logo=') + 6) || '1');
-            let colourNumber = '';
             if (optionNumber === 1) {
               logoNumber = 1;
               colourNumber = 1;
@@ -95,18 +101,48 @@ export default (page: string, user: Maybe<User>): string => `<!doctype html>
               if (!colourNumber) {
                 colourNumber = query.substring(query.indexOf('colour=') + 7, query.indexOf('colour=') + 8) || '1'
               }
-              document.getElementById('logo-wrapper').innerHTML = '<img alt="" class="site-logo" id="siteLogo">';
               htmlElement.classList.add('logo-' + logoNumber, 'colour-' + colourNumber);
-              document.getElementById('siteLogo').src = '/static/images/hive-ideas_colour_way_' + logoNumber + '.svg';
+              injectLogo('/static/images/hive-ideas_colour_way_' + logoNumber + '.svg')
             } else if (logoNumber === 5) {
-              document.getElementById('siteLogo').src = '/static/images/hive-ideas_idea-2.svg';
+              injectLogo('/static/images/hive-ideas_idea-2.svg');
             } else if (logoNumber === 6) {
-              document.getElementById('siteLogo').src = '/static/images/hive-ideas_idea-3.svg';
+              injectLogo('/static/images/hive-ideas_idea-3.svg');
             }
         
           } else if (designIteration === 2) {
-            const colourNumber = parseInt(query.substring(query.indexOf('colour=') + 7, query.indexOf('colour=') + 8)) || '1'
+            const optionNumber = parseInt(query.substring(query.indexOf('option=') + 7, query.indexOf('option=') + 8)) ?? 0;
+              0;
+            let logoPath = '';
+            switch (optionNumber) {
+              case 1:
+                logoPath = '/static/images/hive-ideas-refinements_00796B-option.svg'
+                colourNumber = 1;
+                break;
+              case 2:
+                logoPath = '/static/images/hive-ideas-refinements_00796B-option-2.svg'
+                colourNumber = 1;
+                break;
+              case 3:
+                logoPath = '/static/images/hive-ideas-refinements_283593-option.svg'
+                colourNumber = 2;
+                break;
+              case 4:
+                logoPath = '/static/images/hive-ideas-refinements_C1390F-option.svg'
+                colourNumber = 1;
+                break;
+              default:
+                colourNumber = 0;
+            }
             htmlElement.classList.add('iteration-2', 'colour-' + colourNumber);
+            if (logoPath) {
+              injectLogo(logoPath);
+            }
+            
+            const fontNumber = !isNaN(parseInt(query.substring(query.indexOf('font=') + 5, query.indexOf('font=') + 6))) ? parseInt(query.substring(query.indexOf('font=') + 5, query.indexOf('font=') + 6)) :
+            '';
+            if (fontNumber) {
+              htmlElement.classList.add('font-' + fontNumber);
+            }
           }
           
         });
