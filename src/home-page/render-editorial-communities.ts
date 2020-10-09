@@ -17,21 +17,26 @@ export default (
 ): RenderEditorialCommunities => async (userId) => {
   const editorialCommunityLinks = await Promise.all((await editorialCommunities())
     .map(async (editorialCommunity) => (`
-        <div class="content">
-          <a href="/editorial-communities/${editorialCommunity.id.value}" class="header">${editorialCommunity.name}</a>
-          <div class="extra">
-            ${await renderFollowToggle(userId, editorialCommunity.id)}
+        <a href="/editorial-communities/${editorialCommunity.id.value}" class="editorial-community">
+          <img src="https://pbs.twimg.com/profile_images/1239550325188710402/7_lY-IyL_200x200.png" alt="" class="editorial-community__avatar">
+          <div class="editorial-community__name">
+            ${editorialCommunity.name}
           </div>
-        </div>
-      `)));
+        <div class="editorial-community__featured_event">
+          <div><b>reviewed</b></div>
+          <div>A statistical framework for assessing pharmacological response and biomarkers using uncertainty estimates</div>
+          </div>
+        <object class="editorial-community__toggle_wrapper">${await renderFollowToggle(userId, editorialCommunity.id)}</object>
+      </a>
+    `)));
 
   return `
       <section>
-        <h2>
+        <h2 class="editorial-community-list-heading">
           Editorial communities
         </h2>
-        <ol class="ui divided items" role="list">
-          ${templateListItems(editorialCommunityLinks)}
+        <ol class="editorial-community-list" role="list">
+          ${templateListItems(editorialCommunityLinks, 'home-page-community-list__item')}
         </ol>
       </section>
     `;
