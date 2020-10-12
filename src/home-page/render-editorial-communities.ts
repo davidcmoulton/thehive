@@ -22,10 +22,10 @@ export default (
           <div class="editorial-community__name">
             ${editorialCommunity.name}
           </div>
-        <div class="editorial-community__featured_event">
-          <div><b>reviewed</b></div>
-          <div>A statistical framework for assessing pharmacological response and biomarkers using uncertainty estimates</div>
-          </div>
+<!--        <div class="editorial-community__featured_event">-->
+<!--          <div><b>reviewed</b></div>-->
+<!--          <div>A statistical framework for assessing pharmacological response and biomarkers using uncertainty estimates</div>-->
+<!--        </div>-->
         <object class="editorial-community__toggle_wrapper">${await renderFollowToggle(userId, editorialCommunity.id)}</object>
       </a>
     `)));
