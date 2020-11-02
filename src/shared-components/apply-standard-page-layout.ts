@@ -50,9 +50,9 @@ export default (page: string, user: Maybe<User>): string => `<!doctype html>
 </head>
 <body>
   ${googleTagManagerNoScript}
-  <header>
-
-    <nav class="site-header">
+  <header class="site-header">
+    <img src="/static/images/sciety-logo-full-colour.svg" alt="" class="site-header__logo">
+    <nav class="site-header__navigation">
 
       <ul class="ui large text menu">
 
