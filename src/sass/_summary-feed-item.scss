@@ -29,4 +29,12 @@ $_avatar-border-width: 1px;
 
 .summary-feed-item__title {
   margin-bottom: baseline.increments(2);
+
+  > a {
+    color: inherit;
+  }
+
+  > a:hover {
+    color: var(--COLOUR-PRIMARY--NEW);
+  }
 }
