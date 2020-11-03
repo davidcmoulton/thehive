@@ -33,8 +33,7 @@
 
 .search-form__button {
   @include button.basics();
-  @include button.primary-colour();
-
+  @include button.primary-colour--new();
   font-weight: bold;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;

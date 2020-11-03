@@ -9,7 +9,7 @@ export default (): RenderPageHeader => (
       </h1>
 
       <p>
-        Where research is evaluated and curated by the communities you trust.<br><a href="/about">Learn more about the platform.</a>
+        Where research is evaluated and curated by the communities you trust.<br><a href="/about" class="home-page-header__link">Learn more</a> about the platform.
       </p>
 
     </header>

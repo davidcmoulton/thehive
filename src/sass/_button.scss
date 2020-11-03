@@ -16,7 +16,6 @@
   }
 }
 
-// TODO: Remove !important when not overriding Semantic-UI
 @mixin primary-colour--new {
   color: #fff !important;
   background-color: var(--COLOUR-PRIMARY--NEW);

@@ -9,6 +9,14 @@
   margin-bottom: #{baseline.increments(7)};
 }
 
+.home-page-header__link {
+  color: var(--COLOUR-PRIMARY--NEW);
+
+  &:hover {
+    color: var(--COLOUR-PRIMARY-HOVER--NEW);
+  }
+}
+
 .home-page-feed-container {
   grid-column: 1 / -1;
 }
