@@ -35,6 +35,6 @@ $_avatar-border-width: 1px;
   }
 
   > a:hover {
-    color: var(--COLOUR-PRIMARY--NEW);
+    color: settings.$colour-primary;
   }
 }

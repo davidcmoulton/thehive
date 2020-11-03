@@ -1,4 +1,5 @@
 @use 'baseline';
+@use 'settings';
 
 .hive-grid--home > .home-page-header {
   grid-column: 1 / -1;
@@ -10,10 +11,10 @@
 }
 
 .home-page-header__link {
-  color: var(--COLOUR-PRIMARY--NEW);
+  color: settings.$colour-primary;
 
   &:hover {
-    color: var(--COLOUR-PRIMARY-HOVER--NEW);
+    color: settings.$colour-primary-hover;
   }
 }
 

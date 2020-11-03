@@ -7,22 +7,12 @@
 }
 
 @mixin primary-colour {
-  color: #fff;
-  background-color: var(--COLOUR-PRIMARY);
-
-  &:hover {
-    color: #fff;
-    background-color: var(--COLOUR-PRIMARY-HOVER);
-  }
-}
-
-@mixin primary-colour--new {
   color: #fff !important;
-  background-color: var(--COLOUR-PRIMARY--NEW);
+  background-color: settings.$colour-primary;
 
   &:hover {
     color: #fff !important;
-    background-color: var(--COLOUR-PRIMARY-HOVER--NEW);
+    background-color: settings.$colour-primary-hover;
   }
 }
 
@@ -51,10 +41,6 @@
   @include primary-colour();
 }
 
-.button--primary-new {
-  @include primary-colour--new();
-}
-
 .button--default {
   color: settings.$colour-text !important;
   font-weight: normal !important;
@@ -63,7 +49,7 @@
 
   &:hover {
     color: #fff !important;
-    background-color: settings.$colour-primary--new !important;
-    border: 1px solid settings.$colour-primary--new !important;
+    background-color: settings.$colour-primary !important;
+    border: 1px solid settings.$colour-primary !important;
   }
 }
