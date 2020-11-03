@@ -1,3 +1,5 @@
+@use 'settings';
+
 @mixin basics () {
   border-width: 0;
   border-radius: 5px;
@@ -13,6 +15,18 @@
     background-color: var(--COLOUR-PRIMARY-HOVER);
   }
 }
+
+// TODO: Remove !important when not overriding Semantic-UI
+@mixin primary-colour--new {
+  color: #fff !important;
+  background-color: var(--COLOUR-PRIMARY--NEW);
+
+  &:hover {
+    color: #fff !important;
+    background-color: var(--COLOUR-PRIMARY-HOVER--NEW);
+  }
+}
+
 
 .button {
   @include basics();
@@ -36,4 +50,8 @@
 
 .button--primary {
   @include primary-colour();
+}
+
+.button--primary-new {
+  @include primary-colour--new();
 }
