@@ -1,5 +1,6 @@
 @use 'baseline';
 @use 'button';
+@use 'settings';
 
 .search-form {
   margin-bottom: #{baseline.increments(6)};
@@ -26,7 +27,7 @@
 }
 
 .search-form__input:focus {
-  border-color: var(--COLOUR-PRIMARY);
+  border-color: settings.$colour-primary;
   border-right-color: transparent;
   outline: none;
 }
