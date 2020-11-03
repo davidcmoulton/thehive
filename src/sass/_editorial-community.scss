@@ -48,7 +48,7 @@
 }
 
 .editorial-community__link {
-  color: var(--COLOUR-TEXT);
+  color: settings.$colour-text;
 
   &:hover {
     color: settings.$colour-primary-hover;
