@@ -75,25 +75,30 @@ describe('project-user-review-response', () => {
     });
   });
 
-  describe('given no events', () => {
-    it.todo('should return `not`');
-  });
+  describe('one revoked helpful response', () => {
+    it('returns no-response', async () => {
+      const userId = toUserId('some-user');
+      const reviewId = new Doi('10.1111/123456');
+      const projectUserReviewResponse = createProjectUserReviewResponse(async () => [
+        {
+          type: 'UserFoundReviewHelpful',
+          id: generate(),
+          date: new Date(),
+          userId,
+          reviewId,
+        },
+        {
+          type: 'UserRevokedFindingReviewHelpful',
+          id: generate(),
+          date: new Date(),
+          userId,
+          reviewId,
+        },
+      ]);
 
-  describe('given `not`', () => {
-    it.todo('returns `up` with a user responded yes event');
+      const userResponse = await projectUserReviewResponse(new Doi('10.1111/123456'), Maybe.just(userId));
 
-    it.todo('returns `down` with a user responded no event');
-  });
-
-  describe('given `up`', () => {
-    it.todo('returns `not` with a user revoked response event');
-
-    it.todo('returns `down` with a user responded no event');
-  });
-
-  describe('given `down`', () => {
-    it.todo('returns `not` with a user revoked response event');
-
-    it.todo('returns `up` with a user responded yes event');
+      expect(userResponse.isNothing()).toBe(true);
+    });
   });
 });
