@@ -27,7 +27,6 @@
   text-align: center;
   border: 1px solid settings.$colour-grey-one;
   border-radius: 5px;
-  color: settings.$colour-primary;
   padding: baseline.increments(1);
   transition: background-color 0.2s ease-out, border-color 0.1s ease-out;
 
@@ -48,7 +47,7 @@
 }
 
 .editorial-community__link {
-  color: settings.$colour-text;
+  color: inherit;
 
   &:hover {
     color: settings.$colour-primary-hover;
