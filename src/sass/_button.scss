@@ -54,3 +54,16 @@
 .button--primary-new {
   @include primary-colour--new();
 }
+
+.button--default {
+  color: settings.$colour-text !important;
+  font-weight: normal !important;
+  background-color: #fff;
+  border: 1px solid settings.$colour-text;
+
+  &:hover {
+    color: #fff !important;
+    background-color: settings.$colour-primary--new !important;
+    border: 1px solid settings.$colour-primary--new !important;
+  }
+}

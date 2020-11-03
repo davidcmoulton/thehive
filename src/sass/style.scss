@@ -187,6 +187,7 @@ Styles that are independent of Semantic UI
   --BASE-FONT-REM: 1rem;
   --MAX-SITE-WIDTH: 1200;
   --MAX-SITE-WIDTH-REM: calc((var(--MAX-SITE-WIDTH) / var(--BASE-FONT-MEASURE)) * 1rem);
+  --COLOUR-TEXT: #{settings.$colour-text};
   --COLOUR-PRIMARY: #{settings.$colour-primary};
   --COLOUR-PRIMARY-HOVER: #{settings.$colour-primary-hover};
   --COLOUR-PRIMARY--NEW: #{settings.$colour-primary--new};

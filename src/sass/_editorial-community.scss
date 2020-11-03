@@ -27,14 +27,14 @@
   text-align: center;
   border: 1px solid settings.$colour-grey-one;
   border-radius: 5px;
-  color: settings.$colour-primary;
+  color: settings.$colour-primary--new;
   padding: baseline.increments(1);
   transition: background-color 0.2s ease-out, border-color 0.1s ease-out;
 
   &:hover {
-    background-color: settings.$colour-primary-very-light;
-    border-color: settings.$colour-primary-hover;
-    color: settings.$colour-primary-hover;
+    background-color: rgb(247, 247, 247);
+    border-color: settings.$colour-primary-hover--new;
+    color: settings.$colour-primary-hover--new;
   }
 
   button {
@@ -48,7 +48,11 @@
 }
 
 .editorial-community__link {
-  color: inherit;
+  color: var(--COLOUR-TEXT);
+
+  &:hover {
+    color: settings.$colour-primary-hover--new;
+  }
 
   &::before {
     position: absolute;
@@ -71,10 +75,11 @@
   transition: border-color 0.2s ease-out;
 
   .editorial-community:hover & {
-    border-color: settings.$colour-primary-hover;
+    border-color: settings.$colour-primary-hover--new;
   }
 }
 
 .editorial-community__name {
+  color: inherit;
   margin-bottom: baseline.increments(3);
 }
