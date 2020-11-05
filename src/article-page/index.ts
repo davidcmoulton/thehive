@@ -10,7 +10,7 @@ import createRenderArticleAbstract, { GetArticleAbstract, RenderArticleAbstract 
 import createRenderArticleVersionFeedItem from './render-article-version-feed-item';
 import createRenderFeed from './render-feed';
 import createRenderFlavourAFeed from './render-flavour-a-feed';
-import createRenderPage, { RenderPageError } from './render-page';
+import createRenderPage, { RenderPage } from './render-page';
 import createRenderPageHeader, { RenderPageHeader } from './render-page-header';
 import createRenderReviewFeedItem from './render-review-feed-item';
 import createRenderReviewResponses from './render-review-responses';
@@ -34,6 +34,7 @@ type FindVersionsForArticleDoi = (doi: Doi) => Promise<ReadonlyArray<{
 }>>;
 
 interface Ports {
+  // TODO: should this be a type that is compatible (or the intersection) of the various components' ports?
   fetchArticle: FetchExternalArticle;
   fetchReview: GetReview;
   getEditorialCommunity: (editorialCommunityId: EditorialCommunityId) => Promise<Maybe<{
@@ -64,9 +65,9 @@ export interface Params {
   user: Maybe<User>;
 }
 
-type RenderPage = (params: Params) => Promise<Result<string, RenderPageError>>;
+type ArticlePage = (params: Params) => ReturnType<RenderPage>;
 
-export default (ports: Ports): RenderPage => {
+export default (ports: Ports): ArticlePage => {
   const renderPageHeader = buildRenderPageHeader(ports);
   const renderAbstract = buildRenderAbstract(ports.fetchArticle);
   const getEditorialCommunity: GetEditorialCommunity = async (editorialCommunityId) => (
@@ -105,11 +106,14 @@ export default (ports: Ports): RenderPage => {
     renderPageHeader,
     renderAbstract,
     renderFeed,
+    ports.fetchArticle,
   );
+  // TODO: Consider removing flavourA now
   const renderFlavourA = createRenderPage(
     renderPageHeader,
     renderAbstract,
     renderFlavourAFeed,
+    ports.fetchArticle,
   );
   return async (params) => {
     let doi: Doi;
