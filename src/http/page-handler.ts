@@ -6,8 +6,10 @@ import { User } from '../types/user';
 
 type Page = {
   content: string,
-  title?: string,
-  description?: string,
+  openGraph?: {
+    title: string;
+    description: string;
+  }
 };
 
 type RenderPageError = {
@@ -15,14 +17,14 @@ type RenderPageError = {
   content: string
 };
 
-// TODO: deprecate and remove strings from the return type in favor of Page
+// TODO: find better way of handling params of different pages
 type RenderPage = (params: {
   doi?: string;
   id?: string;
   query?: string;
   flavour?: string;
   user: Maybe<User>;
-}) => Promise<string | Result<string | Page, RenderPageError>>;
+}) => Promise<Result<Page, RenderPageError>>;
 
 const successToStatusCode = (): number => OK;
 
@@ -42,26 +44,15 @@ export default (
     };
     context.response.type = 'html';
 
-    const rendered = await renderPage(params);
-
     const user = Maybe.of(context.state.user);
 
-    let result: Result<Page, RenderPageError>;
+    // TODO: find more legible way of expressing this logic
+    const rendered = await renderPage(params);
 
-    if (typeof rendered === 'string') {
-      result = Result.ok({ content: rendered });
-    } else {
-      result = rendered.map((page) => (typeof page === 'string' ? { content: page } : page));
-    }
+    context.response.status = rendered.map(successToStatusCode).unwrapOrElse(errorTypeToStatusCode);
 
-    const page = result.unwrapOrElse((error) => error);
-
-    context.response.status = result.map(successToStatusCode).unwrapOrElse(errorTypeToStatusCode);
-    context.response.body = applyStandardPageLayout({
-      ...page,
-      title: Maybe.of(page.title),
-      description: Maybe.of(page.description),
-    }, user);
+    const page = rendered.unwrapOrElse((error) => error);
+    context.response.body = applyStandardPageLayout(page, user);
 
     await next();
   }

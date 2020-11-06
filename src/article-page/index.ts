@@ -6,18 +6,16 @@ import createGetFeedEventsContent, { GetEditorialCommunity, GetReview } from './
 import createHandleArticleVersionErrors from './handle-article-version-errors';
 import createProjectReviewResponseCounts, { GetEvents as GetEventForReviewResponseCounts } from './project-review-response-counts';
 import createProjectUserReviewResponse, { GetEvents as GetEventForUserReviewResponse } from './project-user-review-response';
-import createRenderArticleAbstract, { GetArticleAbstract, RenderArticleAbstract } from './render-article-abstract';
+import createRenderArticleAbstract from './render-article-abstract';
 import createRenderArticleVersionFeedItem from './render-article-version-feed-item';
 import createRenderFeed from './render-feed';
-import createRenderFlavourAFeed from './render-flavour-a-feed';
-import createRenderPage, { RenderPage } from './render-page';
-import createRenderPageHeader, { RenderPageHeader } from './render-page-header';
+import createRenderPage, { GetArticleDetails as GetArticleDetailsForPage, RenderPage } from './render-page';
+import createRenderPageHeader, { GetArticleDetails as GetArticleDetailsForHeader } from './render-page-header';
 import createRenderReviewFeedItem from './render-review-feed-item';
 import createRenderReviewResponses from './render-review-responses';
 import { Logger } from '../infrastructure/logger';
 import Doi from '../types/doi';
 import EditorialCommunityId from '../types/editorial-community-id';
-import { FetchExternalArticle } from '../types/fetch-external-article';
 import { ReviewId } from '../types/review-id';
 import { User } from '../types/user';
 
@@ -33,9 +31,10 @@ type FindVersionsForArticleDoi = (doi: Doi) => Promise<ReadonlyArray<{
   version: number;
 }>>;
 
+type GetArticleDetailsForAbstract = (doi: Doi) => Promise<Result<{ abstract: string }, 'not-found'|'unavailable'>>;
+
 interface Ports {
-  // TODO: should this be a type that is compatible (or the intersection) of the various components' ports?
-  fetchArticle: FetchExternalArticle;
+  fetchArticle: GetArticleDetailsForPage & GetArticleDetailsForHeader<'not-found'|'unavailable'> & GetArticleDetailsForAbstract;
   fetchReview: GetReview;
   getEditorialCommunity: (editorialCommunityId: EditorialCommunityId) => Promise<Maybe<{
     name: string;
@@ -47,18 +46,6 @@ interface Ports {
   getAllEvents: GetEventForUserReviewResponse & GetEventForReviewResponseCounts;
 }
 
-const buildRenderPageHeader = (ports: Ports): RenderPageHeader => createRenderPageHeader(
-  ports.fetchArticle,
-);
-
-const buildRenderAbstract = (fetchAbstract: FetchExternalArticle): RenderArticleAbstract => {
-  const abstractAdapter: GetArticleAbstract = async (articleDoi) => {
-    const fetchedArticle = await fetchAbstract(articleDoi);
-    return fetchedArticle.map((article) => ({ content: article.abstract }));
-  };
-  return createRenderArticleAbstract(abstractAdapter);
-};
-
 export interface Params {
   doi?: string;
   flavour?: string;
@@ -68,8 +55,10 @@ export interface Params {
 type ArticlePage = (params: Params) => ReturnType<RenderPage>;
 
 export default (ports: Ports): ArticlePage => {
-  const renderPageHeader = buildRenderPageHeader(ports);
-  const renderAbstract = buildRenderAbstract(ports.fetchArticle);
+  const renderPageHeader = createRenderPageHeader(ports.fetchArticle);
+  const renderAbstract = createRenderArticleAbstract(async (doi) => (
+    (await ports.fetchArticle(doi)).map((article) => article.abstract)
+  ));
   const getEditorialCommunity: GetEditorialCommunity = async (editorialCommunityId) => (
     (await ports.getEditorialCommunity(editorialCommunityId)).unsafelyUnwrap()
   );
@@ -101,18 +90,10 @@ export default (ports: Ports): ArticlePage => {
     ),
     createRenderArticleVersionFeedItem(),
   );
-  const renderFlavourAFeed = createRenderFlavourAFeed();
   const renderPage = createRenderPage(
     renderPageHeader,
     renderAbstract,
     renderFeed,
-    ports.fetchArticle,
-  );
-  // TODO: Consider removing flavourA now
-  const renderFlavourA = createRenderPage(
-    renderPageHeader,
-    renderAbstract,
-    renderFlavourAFeed,
     ports.fetchArticle,
   );
   return async (params) => {
@@ -126,9 +107,6 @@ export default (ports: Ports): ArticlePage => {
       });
     }
     const userId = params.user.map((user) => user.id);
-    if (doi.value === '10.1101/646810' && params.flavour === 'a') {
-      return renderFlavourA(doi, userId);
-    }
     return renderPage(doi, userId);
   };
 };

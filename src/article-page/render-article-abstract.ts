@@ -1,22 +1,18 @@
 import { Result } from 'true-myth';
 import Doi from '../types/doi';
 
-interface ArticleAbstract {
-  content: string;
-}
+export type GetArticleAbstract<E> = (doi: Doi) => Promise<Result<string, E>>;
 
-export type GetArticleAbstract = (doi: Doi) => Promise<Result<ArticleAbstract, 'not-found' | 'unavailable'>>;
+type RenderArticleAbstract<E> = (doi: Doi) => Promise<Result<string, E>>;
 
-export type RenderArticleAbstract = (doi: Doi) => Promise<Result<string, 'not-found' | 'unavailable'>>;
-
-export default (getArticleAbstract: GetArticleAbstract): RenderArticleAbstract => (
+export default <E> (getArticleAbstract: GetArticleAbstract<E>): RenderArticleAbstract<E> => (
   async (doi) => (
     (await getArticleAbstract(doi)).map((articleAbstract) => `
       <section class="article-abstract" role="doc-abstract">
         <h2>
           Abstract
         </h2>
-          ${articleAbstract.content}
+          ${articleAbstract}
           <a href="https://doi.org/${doi.value}" class="article-call-to-action-link">
             Read the full article
           </a>

@@ -5,8 +5,10 @@ import { UserId } from '../types/user-id';
 
 type Page = {
   content: string,
-  title: string,
-  description: string,
+  openGraph: {
+    title: string,
+    description: string,
+  }
 };
 
 type RenderPageError = {
@@ -19,7 +21,7 @@ type ArticleDetails = {
   abstract: string,
 };
 
-type GetArticleDetails = (doi: Doi) => Promise<Result<ArticleDetails, 'not-found'|'unavailable'>>;
+export type GetArticleDetails = (doi: Doi) => Promise<Result<ArticleDetails, 'not-found'|'unavailable'>>;
 
 type Component = (doi: Doi, userId: Maybe<UserId>) => Promise<Result<string, 'not-found' | 'unavailable'>>;
 type RenderFeed = (doi: Doi, userId: Maybe<UserId>) => Promise<Result<string, 'no-content'>>;
@@ -43,8 +45,10 @@ export default (
   </div>
 </article>
     `,
-      title: striptags(articleDetails.title),
-      description: striptags(articleDetails.abstract),
+      openGraph: {
+        title: striptags(articleDetails.title),
+        description: striptags(articleDetails.abstract),
+      },
     }
   );
 
